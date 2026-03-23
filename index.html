@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>右投手メニュー｜GYM3・FIELD3</title>
+<meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="右投手メニュー">
+<style>
+:root{
+  --bg:#0b1020;
+  --bg2:#11182c;
+  --panel:#121a2e;
+  --panel2:#18223b;
+  --line:rgba(255,255,255,.10);
+  --text:#e8edf7;
+  --muted:#aeb9cf;
+  --accent:#7dd3fc;
+  --accent2:#86efac;
+  --chip:#20304f;
+  --shadow:0 12px 28px rgba(0,0,0,.28);
+  --radius:18px;
+  --max:760px;
+}
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  padding:0;
+  background:linear-gradient(180deg,var(--bg),var(--bg2) 34%,var(--bg) 100%);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+  -webkit-text-size-adjust:100%;
+}
+body{min-height:100vh;line-height:1.7}
+button{font:inherit}
+a{color:inherit;text-decoration:none}
+.app{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:14px 14px 98px;
+}
+.hero{
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:18px 16px;
+  background:linear-gradient(180deg,rgba(125,211,252,.10),rgba(134,239,172,.05));
+  box-shadow:var(--shadow);
+}
+h1{
+  margin:0 0 8px;
+  font-size:clamp(24px,6vw,34px);
+  line-height:1.15;
+}
+.sub{
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+}
+.meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:14px;
+}
+.chip{
+  display:inline-flex;
+  align-items:center;
+  min-height:30px;
+  padding:0 10px;
+  border-radius:999px;
+  background:var(--chip);
+  border:1px solid var(--line);
+  font-size:12px;
+}
+.top-actions{
+  display:flex;
+  gap:8px;
+  margin-top:14px;
+  flex-wrap:wrap;
+}
+.action-btn{
+  appearance:none;
+  border:none;
+  min-height:42px;
+  padding:0 14px;
+  border-radius:12px;
+  background:rgba(255,255,255,.06);
+  color:var(--text);
+  border:1px solid rgba(255,255,255,.10);
+  font-weight:700;
+  cursor:pointer;
+}
+.action-btn.primary{
+  background:rgba(125,211,252,.16);
+  border-color:rgba(125,211,252,.28);
+}
+.tabbar{
+  position:sticky;
+  top:8px;
+  z-index:30;
+  margin-top:14px;
+}
+.tabwrap{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  padding:8px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;
+  background:rgba(11,16,32,.82);
+  backdrop-filter:blur(10px);
+}
+.tab{
+  appearance:none;
+  border:none;
+  min-height:44px;
+  border-radius:12px;
+  background:rgba(255,255,255,.04);
+  color:var(--text);
+  border:1px solid rgba(255,255,255,.08);
+  font-weight:700;
+  cursor:pointer;
+}
+.tab.active{
+  background:rgba(125,211,252,.16);
+  border-color:rgba(125,211,252,.28);
+}
+.panel{
+  display:none;
+  margin-top:14px;
+}
+.panel.active{display:block}
+.pattern{
+  margin-top:14px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:linear-gradient(180deg,var(--panel),var(--panel2));
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.pattern-head{
+  padding:16px 14px 12px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.pattern-title{
+  margin:0;
+  font-size:19px;
+  line-height:1.25;
+}
+.pattern-sub{
+  margin:6px 0 0;
+  color:var(--muted);
+  font-size:13px;
+}
+.quick{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:10px;
+}
+.quick span{
+  display:inline-flex;
+  align-items:center;
+  min-height:28px;
+  padding:0 10px;
+  border-radius:999px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  font-size:12px;
+}
+.exercise{
+  padding:14px;
+  border-top:1px solid rgba(255,255,255,.06);
+}
+.exercise:first-of-type{border-top:none}
+.exercise h3{
+  margin:0 0 8px;
+  font-size:16px;
+  line-height:1.35;
+}
+.line{
+  margin:5px 0;
+  color:var(--muted);
+  font-size:14px;
+}
+.label{
+  color:#dbe8ff;
+  font-weight:700;
+}
+.checkrow{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:10px;
+}
+.checkrow input{
+  inline-size:18px;
+  block-size:18px;
+  accent-color:#7dd3fc;
+}
+.checkrow label{
+  color:#c7d6ee;
+  font-size:13px;
+}
+.summary{
+  margin-top:14px;
+  padding:14px;
+  border-radius:18px;
+  border:1px dashed rgba(255,255,255,.16);
+  color:var(--muted);
+  font-size:14px;
+}
+.footer-nav{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:40;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(11,16,32,.92);
+  backdrop-filter:blur(10px);
+  border-top:1px solid rgba(255,255,255,.08);
+}
+.footer-wrap{
+  max-width:var(--max);
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+.footer-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:42px;
+  border-radius:12px;
+  background:rgba(255,255,255,.04);
+  color:var(--text);
+  border:1px solid rgba(255,255,255,.08);
+  font-size:13px;
+  font-weight:700;
+}
+.footer-btn.active{
+  background:rgba(125,211,252,.16);
+  border-color:rgba(125,211,252,.28);
+}
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:82px;
+  transform:translateX(-50%);
+  z-index:60;
+  min-width:220px;
+  max-width:calc(100vw - 32px);
+  padding:12px 14px;
+  border-radius:14px;
+  background:rgba(10,15,28,.94);
+  color:var(--text);
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:var(--shadow);
+  font-size:13px;
+  opacity:0;
+  pointer-events:none;
+  transition:.2s ease;
+}
+.toast.show{opacity:1}
+@media (max-width:420px){
+  .footer-btn{font-size:12px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="hero">
+    <h1>右投手メニュー</h1>
+    <p class="sub">GYM 3パターン / FIELD 3パターン。スマホで見てそのまま使う用。</p>
+    <div class="meta">
+      <span class="chip">単一HTML</span>
+      <span class="chip">スマホ閲覧</span>
+      <span class="chip">チェック保存</span>
+      <span class="chip">右投手向け</span>
+    </div>
+    <div class="top-actions">
+      <button class="action-btn primary" id="savePromptBtn" type="button">ホーム画面追加の見方</button>
+      <button class="action-btn" id="resetChecksBtn" type="button">チェックを全リセット</button>
+    </div>
+  </header>
+
+  <div class="tabbar">
+    <div class="tabwrap">
+      <button class="tab active" data-target="gym" type="button">GYM 3パターン</button>
+      <button class="tab" data-target="field" type="button">FIELD 3パターン</button>
+    </div>
+  </div>
+
+  <section id="gym" class="panel active">
+    <article id="gym-a" class="pattern">
+      <div class="pattern-head">
+        <h2 class="pattern-title">GYM A｜支える・乗る</h2>
+        <p class="pattern-sub">前脚股関節で受ける土台と、軸脚で乗り続ける感覚づくり。</p>
+        <div class="quick">
+          <span>所要目安 20〜30分</span>
+          <span>強度 中</span>
+          <span>テーマ 土台</span>
+        </div>
+      </div>
+
+      <div class="exercise">
+        <h3>1. スプリットスタンス・アイソホールド</h3>
+        <p class="line"><span class="label">回数：</span>20〜30秒 × 3セット / 左右</p>
+        <p class="line"><span class="label">やり方：</span>スプリット姿勢で前脚7〜8割荷重。軽く前傾し、前脚の付け根に体重を乗せたまま保持する。</p>
+        <p class="line"><span class="label">ポイント：</span>膝で耐えすぎない。股関節で支えている感覚を残す。</p>
+        <div class="checkrow"><input id="ga1" type="checkbox"><label for="ga1">完了</label></div>
+      </div>
+
+      <div class="exercise">
+        <h3>2. 前足高スプリットスクワット</h3>
+        <p class="line"><span class="label">回数：</span>6〜8回 × 3セット / 左右</p>
+        <p class="line"><span class="label">やり方：</span>前脚を5〜10cm高くしてスプリットスクワット。3秒で下がり、下で1秒止めて戻る。</p>
+        <p class="line"><span class="label">ポイント：</span>反動禁止。下で潰れず、前脚の付け根に体重が残ること。</p>
+        <div class="checkrow"><input id="ga2" type="checkbox"><label for="ga2">完了</label></div>
+      </div>
+
+      <div class="exercise">
+        <h3>3. 片脚RDL</h3>
+        <p class="line"><span class="label">回数：</span>5〜6回 × 3セット / 左右</p>
+        <p class="line"><span class="label">やり方：</span>片脚立ちから股関節で前に倒れ、バランスを保ったまま戻る。</p>
+        <p class="line"><span class="label">ポイント：</span>足先ではなく股関節で立つ。骨盤が開きすぎない。</p>
+        <div class="checkrow"><input id="ga3" type="checkbox"><label for="ga3">完了</label></div>
+      </div>
+
+      <div class="exercise">
+        <h3>4. ヒップイン（バンド）</h3>
+        <p class="line"><span class="label">回数：</span>6回 × 3セット / 左右</p>
+        <p class="line"><span class="label">やり方：</span>骨盤にバンドを巻き、片脚支持に近い姿勢で軽く内側へ動かす。</p>
+        <p class="line"><span class="label">ポイント：</span>膝だけ入れない。股関節の奥が締まる感覚を優先する。</p>
+        <div class="checkrow"><input id="ga4" type="checkbox"><label for="ga4">完了</label></div>
+      </div>
+
+      <div class="exercise">
+        <h3>5. ハーフニーリング・プレス</h3>
+        <p class="line"><span class="label">回数：</span>6〜8回 × 3セット / 左右</p>
+        <p class="line"><span class="label">やり方：</span>片膝立ちで前に押す。体幹をまっすぐ保ったまま、反りすぎずに行う。</p>
+        <p class="line"><span class="label">ポイント：</span>押す時に腰が先に逃げない。下半身が安定した中で上半身を使う。</p>
+        <div class="checkrow"><input id="ga5" type="checkbox"><label for="ga5">完了</label></div>
+      </div>
+    </article>
+
+    <article id="gym-b" class="pattern">
+      <div class="pattern-head">
+        <h2 class="pattern-title">GYM B｜集める・止める</h2>
+        <p class="pattern-sub">脚だけで処理せず、受けた力を中心へまとめて静かに止める。</p>
+        <div class="quick">
+          <span>所要目安 20〜30分</span>
+          <span>強度 中</span>
+          <span>テーマ 受けと停止</span>
+        </div>
+      </div>
+
+      <div class="exercise">
+        <h3>1. ブルガリアンスクワット（スロー）</h3>
+        <p class="line"><span class="label">回数：</span>5〜6回 × 3セット / 左右</p>
+        <p class="line"><span class="label">やり方：</span>ゆっくり下がって最下点で2秒止める。前脚で体を支えたまま戻る。</p>
+        <p class="line"><span class="label">ポイント：</span>脚で押し返すより、股関節から体を戻すイメージ。</p>
+        <div class="checkrow"><input id="gb1" type="checkbox"><label for="gb1">完了</label></div>
+      </div>
+
+      <div class="exercise">
+        <h3>2. スプリットポゴ → ストップ</h3>
+        <p class="line"><span class="label">回数：</span>3＋1 × 4セット / 左右</p>
+        <p class="line"><span class="label">やり方：</span>スプリット姿勢で小さく3回弾み、4回目でピタッと止まる。</p>
+        <p class="line"><span class="label">ポイント：</span>高く跳ばない。止まった時にブレず、静かな接地になること。</p>
+        <div class="checkrow"><input id="gb2" type="checkbox"><label for="gb2">完了</label></div>
+      </div>
+
+      <div class="exercise">
+        <h3>3. ラテラルバウンド → ストップ</h3>
+        <p class="line"><span class="label">回数：</span>4〜5回 × 3セット / 左右</p>
+        <p class="line"><span class="label">やり方：</span>横に小さく跳び、反対脚で着地して2秒静止する。</p>
+        <p class="line"><span class="label">ポイント：</span>着地後に膝が流れない。骨盤が外へ逃げない。</p>
+        <div class="checkrow"><input id="gb3" type="checkbox"><label for="gb3">完了</label></div>
+      </div>
+
+      <div class="exercise">
+        <h3>4. ボックス・ステップオフ → ストップ</h3>
+        <p class="line"><span class="label">回数：</span>4〜5回 × 3セット / 左右</p>
+        <p class="line"><span class="label">やり方：</span>低い台から降りて着地し、その場で静止する。</p>
+        <p class="line"><span class="label">ポイント：</span>骨盤の高さが急に落ちない。着地音を静かにする。</p>
+        <div class="checkrow"><input id="gb4" type="checkbox"><label for="gb4">完了</label></div>
+      </div>
+
+      <div class="exercise">
+        <h3>5. デッドバグ＋バンド</h3>
+        <p class="line"><span class="label">回数：</span>6回 × 3セット / 左右</p>
+        <p class="line"><span class="label">やり方：</span>仰向けでバンドを引きながら対側の手足を伸ばす。</p>
+        <p class="line"><span class="label">ポイント：</span>腰が反らない。脚が動いても体幹が崩れない。</p>
+        <div class="checkrow"><input id="gb5" type="checkbox"><label for="gb5">完了</label></div>
+      </div>
+    </article>
+
+    <article id="gym-c" class="pattern">
+      <div class="pattern-head">
+        <h2 class="pattern-title">GYM C｜つなげる・出す</h2>
+        <p class="pattern-sub">下半身で作ったものを体幹から上へ通す。大きくではなく、短く速く。</p>
+        <div class="quick">
+          <span>所要目安 20〜25分</span>
+          <span>強度 中〜やや高</span>
+          <span>テーマ 伝達</span>
+        </div>
+      </div>
+
+      <div class="exercise">
+        <h3>1. ハーフニーリング・ローテーションプレス</h3>
+        <p class="line"><span class="label">回数：</span>6〜8回 × 3セット / 左右</p>
+        <p class="line"><span class="label">やり方：</span>片膝立ちで軽く回りながら前へ押す。腰だけを切らず、下から上へ流す。</p>
+        <p class="line"><span class="label">ポイント：</span>骨盤から胸、そのあと腕の順で動く。</p>
+        <div class="checkrow"><input id="gc1" type="checkbox"><label for="gc1">完了</label></div>
+      </div>
+
+      <div class="exercise">
+        <h3>2. MBローテーションスラム</h3>
+        <p class="line"><span class="label">回数：</span>5回 × 4セット / 左右</p>
+        <p class="line"><span class="label">やり方：</span>軽量メディシンボールで短く回り、素早く床へ叩く。</p>
+        <p class="line"><span class="label">ポイント：</span>腕だけで叩かない。大きく振り回さず、一気にまとめる。</p>
+        <div class="checkrow"><input id="gc2" type="checkbox"><label for="gc2">完了</label></div>
+      </div>
+
+      <div class="exercise">
+        <h3>3. MBチェストパス to ウォール</h3>
+        <p class="line"><span class="label">回数：</span>5回 × 4セット</p>
+        <p class="line"><span class="label">やり方：</span>壁に向かって短く速くチェストパス。大きく反らない。</p>
+        <p class="line"><span class="label">ポイント：</span>体幹からまっすぐ出す。肩だけで押し込まない。</p>
+        <div class="checkrow"><input id="gc3" type="checkbox"><label for="gc3">完了</label></div>
+      </div>
+
+      <div class="exercise">
+        <h3>4. ステップアップ・ニーアップホールド</h3>
+        <p class="line"><span class="label">回数：</span>5回 × 3セット / 左右</p>
+        <p class="line"><span class="label">やり方：</span>台に乗り、上で片脚を上げて1秒止める。勢いで通過しない。</p>
+        <p class="line"><span class="label">ポイント：</span>支える脚の股関節が潰れない。上でまとまる。</p>
+        <div class="checkrow"><input id="gc4" type="checkbox"><label for="gc4">完了</label></div>
+      </div>
+
+      <div class="exercise">
+        <h3>5. ケーブル・アンチローテーションホールド</h3>
+        <p class="line"><span class="label">回数：</span>15〜20秒 × 3セット / 左右</p>
+        <p class="line"><span class="label">やり方：</span>横から引かれる負荷に対して正面を保つ。</p>
+        <p class="line"><span class="label">ポイント：</span>骨盤だけ、肩だけで耐えず、全身で静かに保つ。</p>
+        <div class="checkrow"><input id="gc5" type="checkbox"><label for="gc5">完了</label></div>
+      </div>
+    </article>
+
+    <div class="summary">GYMは A → B → C の順で使っても、単独で使ってもよい。1回で全部やる必要はなく、その日のテーマで1パターン選ぶ形でOK。</div>
+  </section>
+
+  <section id="field" class="panel">
+    <article id="field-a" class="pattern">
+      <div class="pattern-head">
+        <h2 class="pattern-title">FIELD A｜止まる</h2>
+        <p class="pattern-sub">移動から受けへの切り替えを作る。止まる形を揃える日。</p>
+        <div class="quick">
+          <span>所要目安 15〜25分</span>
+          <span>強度 中</span>
+          <span>テーマ 停止</span>
+        </div>
+      </div>
+
+      <div class="exercise">
+        <h3>1. ウォーク → スプリットストップ</h3>
+        <p class="line"><span class="label">回数：</span>5回 × 3セット / 左右</p>
+        <p class="line"><span class="label">やり方：</span>数歩歩いて、合図でスプリット姿勢に入り止まる。</p>
+        <p class="line"><span class="label">ポイント：</span>前脚の付け根で止める。毎回同じ形に入る。</p>
+        <div class="checkrow"><input id="fa1" type="checkbox"><label for="fa1">完了</label></div>
+      </div>
+
+      <div class="exercise">
+        <h3>2. ミニハードル → ストップ</h3>
+        <p class="line"><span class="label">回数：</span>4回 × 3セット</p>
+        <p class="line"><span class="label">やり方：</span>低いハードルを越えて、最後に止まる。</p>
+        <p class="line"><span class="label">ポイント：</span>急いで流れない。最後の形をそろえる。</p>
+        <div class="checkrow"><input id="fa2" type="checkbox"><label for="fa2">完了</label></div>
+      </div>
+
+      <div class="exercise">
+        <h3>3. サイドステップ → ストップ</h3>
+        <p class="line"><span class="label">回数：</span>5回 × 3セット / 左右</p>
+        <p class="line"><span class="label">やり方：</span>横へ移動して、合図で止まる。</p>
+        <p class="line"><span class="label">ポイント：</span>膝だけでブレーキをかけず、股関節に体重を残す。</p>
+        <div class="checkrow"><input id="fa3" type="checkbox"><label for="fa3">完了</label></div>
+      </div>
+
+      <div class="exercise">
+        <h3>4. MB落下キャッチ</h3>
+        <p class="line"><span class="label">回数：</span>5回 × 3セット</p>
+        <p class="line"><span class="label">やり方：</span>軽いメディシンボールを受け取り、その場で止まる。</p>
+        <p class="line"><span class="label">ポイント：</span>上半身だけで受けず、全身で静かに吸収する。</p>
+        <div class="checkrow"><input id="fa4" type="checkbox"><label for="fa4">完了</label></div>
+      </div>
+    </article>
+
+    <article id="field-b" class="pattern">
+      <div class="pattern-head">
+        <h2 class="pattern-title">FIELD B｜乗る</h2>
+        <p class="pattern-sub">片脚支持、移動、バランス。軸脚と着地側のまとまりを作る日。</p>
+        <div class="quick">
+          <span>所要目安 15〜25分</span>
+          <span>強度 中</span>
+          <span>テーマ 片脚支持</span>
+        </div>
+      </div>
+
+      <div class="exercise">
+        <h3>1. 片脚スキップ → ストップ</h3>
+        <p class="line"><span class="label">回数：</span>10〜15m × 4本 / 左右</p>
+        <p class="line"><span class="label">やり方：</span>片脚中心でスキップし、最後の接地で2秒静止する。</p>
+        <p class="line"><span class="label">ポイント：</span>最後にブレずに止まる。片脚で立てる。</p>
+        <div class="checkrow"><input id="fb1" type="checkbox"><label for="fb1">完了</label></div>
+      </div>
+
+      <div class="exercise">
+        <h3>2. 片脚ホップ → スティック</h3>
+        <p class="line"><span class="label">回数：</span>4回 × 3セット / 左右</p>
+        <p class="line"><span class="label">やり方：</span>片脚で小さく前へ跳び、着地で静止する。</p>
+        <p class="line"><span class="label">ポイント：</span>高く・遠くより、着地の安定を優先する。</p>
+        <div class="checkrow"><input id="fb2" type="checkbox"><label for="fb2">完了</label></div>
+      </div>
+
+      <div class="exercise">
+        <h3>3. ウォーキングランジ</h3>
+        <p class="line"><span class="label">回数：</span>10歩 × 2〜3本</p>
+        <p class="line"><span class="label">やり方：</span>ゆっくり前に進むランジ。毎歩で股関節に体重を乗せる。</p>
+        <p class="line"><span class="label">ポイント：</span>膝だけに乗らない。歩幅は大きすぎない。</p>
+        <div class="checkrow"><input id="fb3" type="checkbox"><label for="fb3">完了</label></div>
+      </div>
+
+      <div class="exercise">
+        <h3>4. ラテラルシャッフル → スプリットキャッチ</h3>
+        <p class="line"><span class="label">回数：</span>4回 × 3セット / 左右</p>
+        <p class="line"><span class="label">やり方：</span>横移動して最後にスプリット姿勢で止まる。</p>
+        <p class="line"><span class="label">ポイント：</span>流れたまま終わらず、最後の受けを揃える。</p>
+        <div class="checkrow"><input id="fb4" type="checkbox"><label for="fb4">完了</label></div>
+      </div>
+    </article>
+
+    <article id="field-c" class="pattern">
+      <div class="pattern-head">
+        <h2 class="pattern-title">FIELD C｜まとめる</h2>
+        <p class="pattern-sub">反発、リズム、静止を合わせて、現場で使いやすい形にする日。</p>
+        <div class="quick">
+          <span>所要目安 15〜25分</span>
+          <span>強度 中〜やや高</span>
+          <span>テーマ リズムと停止</span>
+        </div>
+      </div>
+
+      <div class="exercise">
+        <h3>1. 連続バウンディング → ストップ</h3>
+        <p class="line"><span class="label">回数：</span>10〜15m × 4本</p>
+        <p class="line"><span class="label">やり方：</span>小さめの連続バウンディングを行い、最後の1歩で静止する。</p>
+        <p class="line"><span class="label">ポイント：</span>大きく飛びすぎず、最後にまとめることを優先。</p>
+        <div class="checkrow"><input id="fc1" type="checkbox"><label for="fc1">完了</label></div>
+      </div>
+
+      <div class="exercise">
+        <h3>2. リズムスキップ</h3>
+        <p class="line"><span class="label">回数：</span>15〜20m × 4本</p>
+        <p class="line"><span class="label">やり方：</span>一定テンポでスキップ。速さよりリズムをそろえる。</p>
+        <p class="line"><span class="label">ポイント：</span>接地音と高さをそろえる。雑に急がない。</p>
+        <div class="checkrow"><input id="fc2" type="checkbox"><label for="fc2">完了</label></div>
+      </div>
+
+      <div class="exercise">
+        <h3>3. ミニハードル・リズムラン</h3>
+        <p class="line"><span class="label">回数：</span>3〜4台 × 4セット</p>
+        <p class="line"><span class="label">やり方：</span>低いハードルを一定テンポで越える。</p>
+        <p class="line"><span class="label">ポイント：</span>速さより気持ちよくそろうこと。最後まで同じリズム。</p>
+        <div class="checkrow"><input id="fc3" type="checkbox"><label for="fc3">完了</label></div>
+      </div>
+
+      <div class="exercise">
+        <h3>4. MB受け → 1歩 → ストップ</h3>
+        <p class="line"><span class="label">回数：</span>4〜5回 × 3セット</p>
+        <p class="line"><span class="label">やり方：</span>軽いMBを受けて1歩だけ進み、最後に止まる。</p>
+        <p class="line"><span class="label">ポイント：</span>受けて終わらず、最後の1歩まで静かにまとめる。</p>
+        <div class="checkrow"><input id="fc4" type="checkbox"><label for="fc4">完了</label></div>
+      </div>
+    </article>
+
+    <div class="summary">FIELDは 止める日、乗る日、まとめる日 で分けて使う。グラウンド状況に合わせて1パターンだけ選べばよい。</div>
+  </section>
+</div>
+
+<nav class="footer-nav">
+  <div class="footer-wrap" id="footerWrap">
+    <a class="footer-btn active" href="#gym-a">GYM A</a>
+    <a class="footer-btn" href="#gym-b">GYM B</a>
+    <a class="footer-btn" href="#gym-c">GYM C</a>
+  </div>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  const tabs = document.querySelectorAll('.tab');
+  const panels = document.querySelectorAll('.panel');
+  const footerWrap = document.getElementById('footerWrap');
+  const savePromptBtn = document.getElementById('savePromptBtn');
+  const resetChecksBtn = document.getElementById('resetChecksBtn');
+  const toast = document.getElementById('toast');
+
+  function showToast(message){
+    toast.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(showToast._timer);
+    showToast._timer = setTimeout(function(){
+      toast.classList.remove('show');
+    }, 2200);
+  }
+
+  function bindFooterButtons(){
+    const btns = footerWrap.querySelectorAll('.footer-btn');
+    btns.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        btns.forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+      });
+    });
+  }
+
+  function setFooterLinks(type){
+    if(type === 'field'){
+      footerWrap.innerHTML =
+        '<a class="footer-btn active" href="#field-a">FIELD A</a>' +
+        '<a class="footer-btn" href="#field-b">FIELD B</a>' +
+        '<a class="footer-btn" href="#field-c">FIELD C</a>';
+    } else {
+      footerWrap.innerHTML =
+        '<a class="footer-btn active" href="#gym-a">GYM A</a>' +
+        '<a class="footer-btn" href="#gym-b">GYM B</a>' +
+        '<a class="footer-btn" href="#gym-c">GYM C</a>';
+    }
+    bindFooterButtons();
+  }
+
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      const target = tab.getAttribute('data-target');
+      tabs.forEach(function(t){ t.classList.remove('active'); });
+      panels.forEach(function(p){ p.classList.remove('active'); });
+      tab.classList.add('active');
+      document.getElementById(target).classList.add('active');
+      setFooterLinks(target);
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  });
+
+  bindFooterButtons();
+
+  document.querySelectorAll('input[type="checkbox"]').forEach(function(cb){
+    const key = 'right_pitcher_single_' + cb.id;
+    cb.checked = localStorage.getItem(key) === '1';
+    cb.addEventListener('change', function(){
+      localStorage.setItem(key, cb.checked ? '1' : '0');
+    });
+  });
+
+  resetChecksBtn.addEventListener('click', function(){
+    const ok = confirm('すべてのチェックをリセットしますか？');
+    if(!ok) return;
+    document.querySelectorAll('input[type="checkbox"]').forEach(function(cb){
+      cb.checked = false;
+      localStorage.removeItem('right_pitcher_single_' + cb.id);
+    });
+    showToast('チェックをリセットしました');
+  });
+
+  savePromptBtn.addEventListener('click', function(){
+    showToast('iPad / iPhone は 共有 → ホーム画面に追加');
+  });
+})();
+</script>
+</body>
+</html>
